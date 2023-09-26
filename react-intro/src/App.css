@@ -19,7 +19,7 @@ h1 {
 /* AirBnB */
 .airbnbWindow {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
   text-align: left;
