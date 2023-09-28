@@ -1,35 +1,53 @@
 import "./App.css";
 import { useState } from "react";
-import {evaluate} from "mathjs"
-
-
-
+import { evaluate } from "mathjs";
 
 function App() {
-
-const calcButtons = [
-  ["(", ")", " ^ ", " AC "],
-  ["7", "8", "9", " / "],
-  ["4", "5", "6", " * "],
-  ["1", "2", "3", " - "],
-  ["0", ".", " = ", " + "],
-];
-const [windowValue,setwindowValue] = useState("")
+  const calcButtons = [
+    ["(", ")", " ^ ", " AC "],
+    ["7", "8", "9", " / "],
+    ["4", "5", "6", " * "],
+    ["1", "2", "3", " - "],
+    ["0", ".", " = ", " + "],
+  ];
+  const [windowValue, setWindowValue] = useState("");
 
   const handleClick = (value) => {
-    setwindowValue(windowValue + value) 
+    setWindowValue(windowValue + value);
     if (value === " = ") {
-      setwindowValue(evaluate(windowValue))
+      setWindowValue(evaluate(windowValue));
     }
     if (value === " AC ") {
-      setwindowValue("")
+      setWindowValue("");
+    }
+  };
+  const handleKeyDown = (e) => {
+    let key = e.key;
+    console.log(key);      
+    if (key === `=` || key === `Enter`) {
+        setWindowValue(evaluate(windowValue));
+      }
+      if (key === `Backspace`) {
+        setWindowValue("");
+      }
+    const regex =
+      /[0-9]|[+]|[-]|[(]|[)]|[*]|[/]|[\^]|\./;
+    if (!regex.test(key)) {
+      e.preventDefault();
+    } else {
+      setWindowValue(windowValue + key);
     }
   };
 
   return (
     <div className="calculator">
       <div className="window">
-        <h1>{windowValue}</h1>
+        <input
+          className="input"
+          name="input"
+          onKeyDown={(e) => handleKeyDown(e)}
+          value={windowValue}
+        />
       </div>
       <div className="buttons">
         {calcButtons.flat().map((calcButtons, index) => {
@@ -41,7 +59,7 @@ const [windowValue,setwindowValue] = useState("")
             />
           );
         })}
-        </div>
+      </div>
     </div>
   );
 }
