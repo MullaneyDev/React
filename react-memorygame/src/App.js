@@ -43,6 +43,7 @@ function App() {
     setCards(shuffleCards(cardShuffle));
     setClearedCards(0);
     setMoves(0);
+    setOpenCards([])
   };
 
   const handleClick = (index) => {
